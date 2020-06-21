@@ -1,16 +1,15 @@
 # Настройки
 a = 1
 b = 100
-print(f'Загадай число от {a} до {b}...')
+print(f'Я загадал число от {a} до {b}...')
 
 
 # Определим свою функцию, которая напечатает правила
-def print_rules():
-    rules = '''Если я угадаю, напиши "=",
-        если твое число меньше, то введи "<",
-        а если больше, то ">".
-        И нажми на Enter.'''
-    print()  # Пустая строка
+def print_rules1():
+    rules = '''Если ты угадешь, игра закончится,
+если мое число меньше, увидишь "<",
+а если больше, то ">".'''
+    print()
     print(rules)
     print()
 
@@ -19,42 +18,39 @@ def print_rules():
 import time
 
 time.sleep(1)
-print('Загадал?')
+print('Готов?')
 time.sleep(1)
 print('Тогда поехали!')
 time.sleep(1)
-print_rules()
+print_rules1()
 time.sleep(1)
 
-# Отгадываем
-steps = 0
+# Поехали
+import random
+
+lucky_number = random.randint(a, b)
+print(lucky_number)
+
+counter = 1
 
 while True:
-    if a > b:
-        print('Произошел конфуз...')
-        print('Попробуй заново')
-        break
-    if a == b:
-        print(f'Все понятно. Ответ - {a}')
-        print(f'Потребовалось шагов: {steps}')
-        break
-
-    steps += 1
-
-    number = (a + b) // 2
-    answer = input(f'Это {number}? ')
-
-    if answer == '=':
-        print('Ура! Я отгадал!')
-        print(f'Потребовалось шагов: {steps}')
-        break
-    elif answer == '<':
-        b = number - 1
-    elif answer == '>':
-        a = number + 1
+    chance = input()
+    if chance.isdigit():
+        chance = int(chance)
+        if chance not in range(a, b + 1):
+            print('Не понял. На всякий случай напомню правила:')
+            print(f'Я загадал число от {a} до {b}...')
+            print_rules1()
+            continue
+        if chance == lucky_number:
+            print(f'Bingo! Понадобилось {counter} попыток')
+            break
+        elif chance > lucky_number:
+            print("<")
+        elif chance < lucky_number:
+            print(">")
+        counter += 1
     else:
         print('Не понял. На всякий случай напомню правила:')
-        print_rules()
-        steps -= 1
-
-print('Спасибо.')
+        print(f'Я загадал число от {a} до {b}...')
+        print_rules1()
