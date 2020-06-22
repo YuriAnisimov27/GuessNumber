@@ -1,3 +1,5 @@
+import jsonschema
+
 # Настройки
 a = 1
 b = 100
